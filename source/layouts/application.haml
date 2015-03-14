@@ -1,0 +1,11 @@
+!!! 5
+%head
+  %meta{ charset: "utf-8" }
+  %meta{ name: "viewport", content: "initial-scale=1.0" }
+  %title= "Deluaney Sketches"
+  = stylesheet_link_tag "application"
+
+%body
+  %section#main
+    = yield
+  = javascript_include_tag "application"
