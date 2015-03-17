@@ -32,9 +32,23 @@ $(document).ready ->
   # Colors
   colors = []
 
+
+
+  # ...
+
+
   console.time("generate");
 
+  _.map liquitex_colors, (c) ->
+    colors.push pusher.color(c.hex)
 
+  colors = _.sortBy colors, (c) ->
+    c.hue()
+
+
+
+  _.map colors, (c) ->
+    console.log c.hue()
 
   # $.ajax
   #   url: 'data/colors.json'
@@ -58,14 +72,14 @@ $(document).ready ->
   #Classic Set of 8 - Includes eight 2 oz jars consisting of Dioxazine Purple, Ivory Black, Naphthol Crimson, Emerald Green, Cadmium Yellow Medium Hue, Titanium White, Phthalo Blue (Green Shade) and Cadmium Orange Hue.
 
   # Generate points
-  # _(num_points).times ->
-  #   points.push [Math.floor(Math.random()*(width+(edge_size*2)))-edge_size, Math.floor(Math.random()*(height+(edge_size*2)))-edge_size]
+  _(num_points).times ->
+    points.push [Math.floor(Math.random()*(width+(edge_size*2)))-edge_size, Math.floor(Math.random()*(height+(edge_size*2)))-edge_size]
 
+  # Generate linear points
   _(18).times (y) ->
     _(28).times (x) ->
       points.push [x*100, y*100]
 
-  console.log points
 
 
   polygons = Delaunay.triangulate(points)
@@ -73,6 +87,7 @@ $(document).ready ->
 
 
   i = polygons.length
+  c = 0
   while i
     --i
     pt1x = points[polygons[i]][0]
@@ -84,23 +99,27 @@ $(document).ready ->
     pt3x = points[polygons[i]][0]
     pt3y = points[polygons[i]][1]
     pts = "#{pt1x},#{pt1y} #{pt2x},#{pt2y} #{pt3x},#{pt3y}"
-    clr = _.shuffle(liquitex_colors)[0].hex
+    # clr = _.shuffle(liquitex_colors)[0].hex
+    unless c < colors.length
+      c = 0
+    clr = colors[c].hex6()
+    c++
     svg.append("polygon").
       # attr("fill", "hsl(190,100%,#{(Math.random()*10)+30}%)").
       attr("fill", clr).
-      # attr("stroke", clr).
-      # attr("stroke-width", 1).
+      attr("stroke", clr).
+      attr("stroke-width", 1).
       attr("points", pts)
       # attr("filter", "url(#blur)")
 
-  # svg.append("foreignObject").
+  # svg.append("text").
   #   attr('x', width/3*2).attr('y', height/3*2).
   #   attr('fill', '#FADEDE').
   #   style("font-family", "Helvetica Neue").
-  #   style("font-size", height/3).
-  #   style("font-weight", 900).
+  #   style("font-size", height*2).
+  #   style("font-weight", 100).
   #   style("text-anchor", "middle").
-  #   text("up")
+  #   text("@")
 
   console.timeEnd("generate");
 
