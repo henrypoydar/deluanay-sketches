@@ -1,4 +1,19 @@
+
 $(document).ready ->
+
+
+
+  img = document.createElement("img")
+  img.src = "http://paperjs.org/tutorials/images/working-with-rasters/mona.jpg";
+  img.id = "mona"
+  # raster = new paper.Raster('mona')
+  document.body.appendChild(img);
+  canvas = document.getElementById('paper-canvas');
+  paper.setup(canvas)
+  raster = new paper.Raster('mona')
+  raster.scale(0.5)
+  raster.rotate(45)
+  # http://paperjs.org/tutorials/images/color-averaging-image-areas/
 
   width = 1300
   height = 800
