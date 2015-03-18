@@ -3,6 +3,10 @@ $(document).ready ->
 
 
 
+  # TODO
+  # - hover pallette
+  # - hover grid
+
   # img = document.createElement("img")
   # img.src = "http://paperjs.org/tutorials/images/working-with-rasters/mona.jpg";
   # img.id = "mona"
